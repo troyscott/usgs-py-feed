@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+#
+#	Developed by: Troy Scott	
+#	Created: January 21, 2012		
+#	Modified: January 23, 2012
+#	
+#	Description:
+#
+#
+#
+#
+
+import geofeed
+import datetime
+import sys
+
+import bottle
+
+from bottle import route, run, error, debug
+from bottle import response
+from bottle import static_file
+
+
+htdocs = '/home/scottt/development/geologic/pub'
+
+@route('/')
+def get_home():
+	filename = 'index.html'
+	return static_file(filename, root=htdocs)
+
+
+@route('/<filename>')
+def server_static(filename):
+	return static_file(filename, root=htdocs)
+
+
+@route('/quake/<rss>')
+def get_quake(rss):
+
+	print rss.upper()
+	
+	if rss.upper() == 'LAST_HOUR_M1':
+		url = geofeed.LAST_HOUR_M1
+	if rss.upper() == 'LAST_HOUR_M0':
+		url = geofeed.LAST_HOUR_M0
+
+	response.content_type = 'application/json'	
+
+	return geofeed.quakeFeed(url) 
+
+ 
+def main():
+	debug(False)
+	run(host='0.0.0.0', port=8080, reloader=True)
+
+# Start the server
+if __name__ == '__main__':
+	main()

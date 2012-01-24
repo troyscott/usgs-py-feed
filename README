@@ -1,6 +1,6 @@
 usgs-py-feed
 ------------
 
-This is a simple project demonstarting how to use Python's Bottle Micro Web Framework.   The application makes the USGS RSS Feeds a RESTful request.  The data is then returned to the client as a JSON string.   Bottle is a standalone development server but it can be easily implmented on Google App Engine,  Tornado and other WSGI frameworks.
+This is a project demonstartes how to use Python's Bottle Micro Web Framework.  The application converts  USGS RSS Feeds to a RESTful request.  The data is then returned to the client as a JSON string.   Bottle is a standalone development server but it can be easily implmented on Google App Engine,  Tornado and other WSGI frameworks.
 
-Plan to create a simple interface for the project using jQuery and jQuery Mobile.  The pub directory has a basic index.html page which makes an ajax calle to the on of the services.
+Plan to create a simple interface for the project using jQuery and jQuery Mobile.  The pub directory has an index.html page which makes an ajax call to  the one of the services.

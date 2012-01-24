@@ -28,7 +28,7 @@ def getFeed(url):
 	
 	return doc
 # If Python Bottle Framework is passed a Dictionary
-# it automatically converts it to a JSON Object	
+# it automatically converts it to a JSON string	
 def rss_to__dict(doc):
 	
 	# Create a Dictionary to store the data  
@@ -43,10 +43,6 @@ def rss_to__dict(doc):
 	
 	return rss
 
-
-
-def quakeFeed2(url):
-	return rss_to_json(getFeed(url))
 			
 def quakeFeed(url=LAST_HOUR_M1):
 	return rss_to__dict(getFeed(url))

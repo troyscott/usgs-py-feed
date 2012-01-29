@@ -10,6 +10,7 @@
 #
 #
 
+
 import geofeed
 import datetime
 import sys
@@ -46,7 +47,7 @@ def get_quake(rss):
 
 	response.content_type = 'application/json'	
 
-	return geofeed.quakeFeed(url) 
+	return geofeed.get_raw_feed(url) 
 
   
 def main():

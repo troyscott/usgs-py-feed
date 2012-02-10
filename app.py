@@ -2,13 +2,13 @@
 #
 #	Developed by: Troy Scott	
 #	Created: January 21, 2012		
-#	Modified: January 23, 2012
+#	Modified: February  8, 2012
 #	
 #	Description:
 #
-#
-#
-#
+#	This module is used to handle RESTful requests to the 
+#	USGS api and provide a simple web server front end for
+#	the application.
 
 
 import geofeed
@@ -17,7 +17,7 @@ import sys
 import os
 
 from bottle import route, run, error, debug
-from bottle import response
+from bottle import request, response
 from bottle import static_file
 
 
@@ -39,7 +39,8 @@ def server_static(filename):
 def get_quake(rss):
 
 	print rss.upper()
-	
+
+		
 	if rss.upper() == 'LAST_HOUR_M1':
 		url = geofeed.LAST_HOUR_M1
 	if rss.upper() == 'LAST_HOUR_M0':

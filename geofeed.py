@@ -2,7 +2,13 @@
 #	
 #	Developed by: 	Troy Scott
 #	Created: January 21, 2012
-#	Modified: January 29, 2012
+#	Modified: February  8, 2012
+#
+#	Description:
+#
+# 	This is the USGS API Module.  It makes calls to the external
+# 	USGS data feeds (usually rss feeds) and converts them to 
+# 	XML and JSON.
 
 import datetime
 import httplib2
@@ -37,11 +43,11 @@ def rss_to__dict(doc):
 	rss = {"rss":[]}
 	for feed in doc.findall("channel/item"):
 		# Create a Dictionary for the current item
-		item = {}
-		for items in feed:
-			tag = remove_uri(items.tag)
-			item[tag] = items.text
-		rss["rss"].append(item)
+		data = {}
+		for item in feed:
+			for k,v  in transform(item.tag,item.text).iteritems():
+				data[k] = v				
+		rss["rss"].append(data)
 	
 	return rss
 
@@ -63,8 +69,11 @@ def remove_uri(name):
 def get_raw_feed(url=LAST_HOUR_M1):
 	return rss_to__dict(get_xml(url))
 
-# Transforms for earthquake feeds 
-def transform_earthquakes(url=LAST_HOUR_M1):
+ 
+def transform(tagname, tagvalue):
+
+	# Convert this to a class to make it more
+	# flexible.
 
 	'''
 	new quake dictionary spec:
@@ -82,18 +91,22 @@ def transform_earthquakes(url=LAST_HOUR_M1):
 	
 
 	'''
-	quake = {}
- 
-	if 'earthquakes' in url:
-		feed = get_raw_feed(url)
-		#for k, v in feed.iteritems():			
-		return feed			 
+ 	tag = remove_uri(tagname)
+	value = tagvalue	 
+
+	items = {}
+
+	if tag == "description":
+		items['date_short'] = '2012/02/01'
+		items['date_long'] = 'February 01, 2012'
 	else:
-		return {'Error': 'Invalid url for transform'}
-	
+		items[tag] = value
+		
+
+	return items  
 
 def run():
-	quakeFeed()
+	pass
 
 if __name__ == '__main__':
 	print 'geofeed.run()'

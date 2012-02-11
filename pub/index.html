@@ -3,11 +3,16 @@
 <head>
 
 <title>Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" >
 <link rel="stylesheet" type="text/css" href="main.css" />
-<script type="text/javascript" src="jquery-1.7.1.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+
 <script type="text/javascript">
 
-$().ready(function(){
+(function($){
 
 	console.log('jQuery Works');
 	$.get('quake/last_hour_m1', function(data) {
@@ -18,14 +23,55 @@ $().ready(function(){
 
 	});
 
-});
+})(jQuery);
 
 
 </script>
 </head>
 <body>
 
-Home
+<!-- Main Page -->
+
+<div data-role="page" id="main">
+
+	<div data-role="header">
+	<h1>USGS Report Menu </h1>
+	</div>
+	<div data-role="content">
+ 	<p><a href="#hrm01plus" data-role="button">Earthquakes - Past Hour - M0+</a></p>
+	<p><a href="#hrm1plus" data-role="button">Earthquakes - Past Hour - M1+</a></p>
+ 	<p><a href="#pdm2.5plus" data-role="button">Earthquakes - Past Day - 2.5+</a></p>
+	<p><a href="#p7dm5plus" data-role="button">Earthquakes - Past 7 Days - 5+</a></p>
+	<p><a href="pd7dm7plus" data-role="button">Earthquakes - Past 7 Days - 7+</a></p>
+	</div>
+
+	<div data-role="footer">
+	<a href="http://earthquake.usgs.gov/earthquakes/catalogs/">Data provided by US Geological Survey</a>
+	</div>
+
+
+
+</div>
+
+
+<!-- Hourly - M0+ -->
+
+<div data-role="page" id="hrm01plus">
+	<div data-role="header">
+		<h1>Earthquakes - Past Hour - M0+</h1>
+	</div>
+	<div data-role="content">
+	
+	
+
+
+	</div>
+
+	<div data-role="footer"></div>
+
+
+</div>
+
 
 
 </body>

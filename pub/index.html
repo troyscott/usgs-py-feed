@@ -15,13 +15,25 @@
 (function($){
 
 	console.log('jQuery Works');
-	$.get('quake/last_hour_m1', function(data) {
+
+	$.get('quake/last_hour_m0', function(data) {
 
 		console.log('Ajax request ...');
 		console.log(data);
+		var feed = []		
+		$.each(data.rss, function(index, field) {
+			
+		console.log(field.guid);
+		feed.push('<li><h3>' + field.title + '</h3></li>')
+		
+				
+		});
 
+		jQuery(feed.join('\n')).appendTo('#hrm0');
 
-	});
+		console.log(feed.join('\n'));
+	},"json");
+	
 
 })(jQuery);
 
@@ -42,37 +54,45 @@
 	<p><a href="#hrm1plus" data-role="button">Earthquakes - Past Hour - M1+</a></p>
  	<p><a href="#pdm2.5plus" data-role="button">Earthquakes - Past Day - 2.5+</a></p>
 	<p><a href="#p7dm5plus" data-role="button">Earthquakes - Past 7 Days - 5+</a></p>
-	<p><a href="pd7dm7plus" data-role="button">Earthquakes - Past 7 Days - 7+</a></p>
+	<p><a href="#pd7dm7plus" data-role="button">Earthquakes - Past 7 Days - 7+</a></p>
+	<!-- Creates a Pop-up dialog box for options -->
+	<p><a href="#options" data-role="button" data-rel="dialog" data-transistion="pop">Options</a></p>
 	</div>
 
 	<div data-role="footer">
 	<a href="http://earthquake.usgs.gov/earthquakes/catalogs/">Data provided by US Geological Survey</a>
 	</div>
 
-
-
 </div>
 
 
 <!-- Hourly - M0+ -->
 
-<div data-role="page" id="hrm01plus">
+<div data-role="page" id="hrm01plus" data-theme="a">
 	<div data-role="header">
-		<h1>Earthquakes - Past Hour - M0+</h1>
+		<h1> Past Hour - M0+</h1>
 	</div>
-	<div data-role="content">
+	<div data-role="content" data-theme="a">
+	<ul id="hrm0" data-role="listview"  >
 	
+	</ul>
 	
-
-
 	</div>
 
-	<div data-role="footer"></div>
-
+	<div data-role="footer">
+	<a href="http://earthquake.usgs.gov/earthquakes/catalogs/">Data provided by US Geological Survey</a>
+	</div>
 
 </div>
 
+<!-- Options -->
+<div data-role="page" id="options">
+	<div data-role="header">
+	<h1>Options</h1>
+	</div>
 
-
+	<div data-role="footer">
+	</div>
+</div>
 </body>
 </html>

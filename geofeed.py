@@ -74,18 +74,6 @@ def get_raw_feed(url=LAST_HOUR_M1):
 def transform(tag, value):
 
 
-	'''
-	new quake dictionary spec:
-	
-	guid: "nc71720285" - No change
-	title: "M 1.2, Northern California" - no change
-	magnitude: "1.2" - derived from title
-	long: "-122.8043"
-	lat: "38.8250"
-	subject: "2.9 km"
-	
-
-	'''
  	tag = remove_uri(tag)
 	items = {}
 
@@ -94,8 +82,6 @@ def transform(tag, value):
 	# Create ISO Date (YYYY-MM-DD) and ISO Time (hh:mm:ss) from
 	# the pubDate	
 	if tag == "pubDate":
-		(day, month, year) = ('','','')
-		(hour, minute, seconds) = ('','','')
 		# Use regexp groups to extract the date and time
 		# pubDate is in the format: 'Sat, 11 Feb 2012 13:30:00 GMT'
 		# Regexp creates 4 groups: day, month, year, time
@@ -115,7 +101,6 @@ def transform(tag, value):
 			print 'RegExp match failed for pubDate'
 	 	
 		
-
 	return items  
 
 def getMonthNumber(month):
@@ -127,7 +112,6 @@ def getMonthNumber(month):
 			'Oct': 10, 'Nov':	11, 'Dec': 12 }
 
 	return num[month]
-
 
 
 if __name__ == '__main__':

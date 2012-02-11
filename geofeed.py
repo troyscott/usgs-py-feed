@@ -10,7 +10,8 @@
 # 	USGS data feeds (usually rss feeds) and converts them to 
 # 	XML and JSON.
 
-import datetime
+from datetime import date, time
+
 import httplib2
 from  xml.etree import ElementTree
 import simplejson as json
@@ -70,20 +71,14 @@ def get_raw_feed(url=LAST_HOUR_M1):
 	return rss_to__dict(get_xml(url))
 
  
-def transform(tagname, tagvalue):
+def transform(tag, value):
 
-	# Convert this to a class to make it more
-	# flexible.
 
 	'''
 	new quake dictionary spec:
 	
 	guid: "nc71720285" - No change
-	description: "January 29, 2012 06:31:13 GMT" - omit
 	title: "M 1.2, Northern California" - no change
-	date_long: "January 29, 2012" - derived from description
-	date_short: "2012/01/29" - derived from description
-	time_gmt: "06:31:13 GMT' - derived from description
 	magnitude: "1.2" - derived from title
 	long: "-122.8043"
 	lat: "38.8250"
@@ -91,24 +86,52 @@ def transform(tagname, tagvalue):
 	
 
 	'''
- 	tag = remove_uri(tagname)
-	value = tagvalue	 
-
+ 	tag = remove_uri(tag)
 	items = {}
 
-	if tag == "description":
-		items['date_short'] = '2012/02/01'
-		items['date_long'] = 'February 01, 2012'
-	else:
-		items[tag] = value
+	items[tag] = value
+
+	# Create ISO Date (YYYY-MM-DD) and ISO Time (hh:mm:ss) from
+	# the pubDate	
+	if tag == "pubDate":
+		(day, month, year) = ('','','')
+		(hour, minute, seconds) = ('','','')
+		p = re.compile(r"\w\w\w,\s(?P<day>\d\d)\s(?P<month>\w\w\w)\s(?P<year>\d\d\d\d)" \
+						"\s(?P<time>\d\d:\d\d:\d\d)")		
+		m = p.match(value)
+		if m:
+			# Convert string to date
+			iso_date = date(
+				int(m.groupdict()['year']), 
+				getMonthNumber(m.groupdict()['month']), 
+				int(m.groupdict()['day']) 
+			)
+		
+			t = m.groupdict()['time'].split(':')
+			iso_time = time (int(t[0]), int(t[1]), int(t[2]) )
+			
+			print 'iso date: %s' % (iso_date)
+			print 'iso time: %s' % (iso_time)
+			items['date_iso_gmt'] = iso_date.isoformat()
+			items['time_iso_gmt'] = iso_time.isoformat()
+		else:
+			print 'RegExp match failed for pubDate'
+	 	
 		
 
 	return items  
 
-def run():
-	pass
+def getMonthNumber(month):
+
+	num = {
+			'Jan': 1, 'Feb': 2, 'Mar': 3, 
+			'Apr': 4, 'May': 4, 'Jun': 6,
+			'Jul': 7, 'Aug': 8, 'Sep': 9,
+			'Oct': 10, 'Nov':	11, 'Dec': 12 }
+
+	return num[month]
+
+
 
 if __name__ == '__main__':
-	print 'geofeed.run()'
-	run()
-
+	pass

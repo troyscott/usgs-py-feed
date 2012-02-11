@@ -16,12 +16,14 @@ import datetime
 import sys
 import os
 
+
 from bottle import route, run, error, debug
-from bottle import request, response
+from bottle import get, post, request, response
 from bottle import static_file
 
 
 htdocs = '%s/pub' % os.getcwd()
+
 
 @route('/')
 def get_home():

@@ -2,7 +2,7 @@
 #	
 #	Developed by: 	Troy Scott
 #	Created: January 21, 2012
-#	Modified: February  8, 2012
+#	Modified: February  10, 2012
 #
 #	Description:
 #
@@ -96,22 +96,19 @@ def transform(tag, value):
 	if tag == "pubDate":
 		(day, month, year) = ('','','')
 		(hour, minute, seconds) = ('','','')
-		p = re.compile(r"\w\w\w,\s(?P<day>\d\d)\s(?P<month>\w\w\w)\s(?P<year>\d\d\d\d)" \
-						"\s(?P<time>\d\d:\d\d:\d\d)")		
+		# Use regexp groups to extract the date and time
+		# pubDate is in the format: 'Sat, 11 Feb 2012 13:30:00 GMT'
+		# Regexp creates 4 groups: day, month, year, time
+		p = re.compile(r"\w\w\w,\s(\d\d)\s(\w\w\w)\s(\d\d\d\d)\s(\d\d:\d\d:\d\d)")		
 		m = p.match(value)
 		if m:
-			# Convert string to date
-			iso_date = date(
-				int(m.groupdict()['year']), 
-				getMonthNumber(m.groupdict()['month']), 
-				int(m.groupdict()['day']) 
-			)
-		
-			t = m.groupdict()['time'].split(':')
+			# ISO Date 
+			d = m.group(3,2,1)
+			iso_date = date(int(d[0]), getMonthNumber(d[1]), int(d[2]))
+			# ISO Time
+			t = m.group(4).split(':')
 			iso_time = time (int(t[0]), int(t[1]), int(t[2]) )
 			
-			print 'iso date: %s' % (iso_date)
-			print 'iso time: %s' % (iso_time)
 			items['date_iso_gmt'] = iso_date.isoformat()
 			items['time_iso_gmt'] = iso_time.isoformat()
 		else:

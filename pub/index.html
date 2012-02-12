@@ -28,12 +28,10 @@
 	</a>
 	</div>
 	<div data-role="content">
- 	<p><a href="#last_hour_m0-page" data-role="button">Earthquakes - Past Hour - M0+</a></p>
-	<p><a href="#hrm1-page" data-role="button">Earthquakes - Past Hour - M1+</a></p>
- 	<p><a href="#pdm2.5-page" data-role="button">Earthquakes - Past Day - 2.5+</a></p>
-	<p><a href="#p7dm5-page" data-role="button">Earthquakes - Past 7 Days - 5+</a></p>
-	<p><a href="#pd7dm7-page" data-role="button">Earthquakes - Past 7 Days - 7+</a></p>
-	<!-- Creates a Pop-up dialog box for options -->
+ 	<p><a  href="#last_hour_m1-page" data-role="button">Past Hour - Magnitude 1+</a></p>
+	<p><a  href="#past_day_m25-page" data-role="button">Past Day - Magnitude 2.5+</a></p>
+	<p><a  href="#past_day_m5-page" data-role="button">Past 7 Days - Magnitude 5+</a></p>
+	<p><a  href="#past_day_m7-page" data-role="button">Past 7 Days - Magnitude 7+</a></p>
 	</div>
 
 	<div data-role="footer" data-position="fixed">
@@ -43,25 +41,67 @@
 </div>
 
 
-<!-- Hourly - M0+ -->
+<!-- Hourly - M1+ -->
 
-<div data-role="page" id="last_hour_m0-page" data-theme="a">
+<div data-role="page" id="last_hour_m1-page" data-theme="a">
 	<div data-role="header" data-position="inline" >
-		<h1> Past Hour - M0+</h1>
+		<h1> Past Hour - M1+</h1>
 		<a href="index.html" data-icon="home" data-theme="b" >Home</a>
 	</div>
 	<div data-role="content" data-theme="a">
-	<ul id="hrm0" data-role="listview" data-inset="true" data-split-theme="b" >
-	
-	</ul>
-	
+		<ul id="last_hour_m1" data-role="listview" data-inset="true" data-split-theme="b" ></ul>
 	</div>
-
-	<div data-role="footer" data-position="fixed">
+<div data-role="footer" data-position="fixed">
 	<a href="http://earthquake.usgs.gov/earthquakes/catalogs/">Data provided by US Geological Survey</a>
-	</div>
-
 </div>
+</div>
+
+<!-- PAST DAY - 2.5+ -->
+
+<div data-role="page" id="past_day_m25-page" data-theme="a">
+	<div data-role="header" data-position="inline" >
+		<h1> Past Day - M2.5+</h1>
+		<a href="index.html" data-icon="home" data-theme="b" >Home</a>
+	</div>
+	<div data-role="content" data-theme="a">
+		<ul id="past_day_m25" data-role="listview" data-inset="true" data-split-theme="b" ></ul>
+	</div>
+<div data-role="footer" data-position="fixed">
+	<a href="http://earthquake.usgs.gov/earthquakes/catalogs/">Data provided by US Geological Survey</a>
+</div>
+</div>
+
+
+<!-- Hourly - M1+ -->
+
+<div data-role="page" id="past_7_days_m5-page" data-theme="a">
+	<div data-role="header" data-position="inline" >
+		<h1>Past 7 Days - M5+</h1>
+		<a href="index.html" data-icon="home" data-theme="b" >Home</a>
+	</div>
+	<div data-role="content" data-theme="a">
+		<ul id="past_7_days_m5" data-role="listview" data-inset="true" data-split-theme="b" ></ul>
+	</div>
+<div data-role="footer" data-position="fixed">
+	<a href="http://earthquake.usgs.gov/earthquakes/catalogs/">Data provided by US Geological Survey</a>
+</div>
+</div>
+
+<!-- Hourly - M1+ -->
+
+<div data-role="page" id="past_7_days_m7-page" data-theme="a">
+	<div data-role="header" data-position="inline" >
+		<h1>Past 7 Days - M7</h1>
+		<a href="index.html" data-icon="home" data-theme="b" >Home</a>
+	</div>
+	<div data-role="content" data-theme="a">
+		<ul id="past_7_days_m7" data-role="listview" data-inset="true" data-split-theme="b" ></ul>
+	</div>
+<div data-role="footer" data-position="fixed">
+	<a href="http://earthquake.usgs.gov/earthquakes/catalogs/">Data provided by US Geological Survey</a>
+</div>
+</div>
+
 
 <!-- Options -->
 <div data-role="page" id="options" data-theme="b">
@@ -81,49 +121,6 @@
 	</div>
 </div>
 
-<!-- Page Logic -->
-
-<script type="text/javascript">
-
-(function($){
-
-        console.log('jQuery Works');
-        console.log(window.navigator.standalone);
-		// bind the page create event to the hourly m0+ ajax request
-		var reports = ['last_hour_m0'];
-
-		var page = '#' + reports[0] + '-page';
-		var url = 'quake/' + reports[0]
-
-		$(page).bind('pagecreate', function() {
-
-        $.ajax({	
-			url: url, //'quake/last_hour_m0',
-			dataType:  'json',
-			success: function(data) {		
-                var feed = []
-				$.each(data.rss, function(index, field) {
-					console.log(field.guid);
-                	feed.push('<li><h3>' + field.title + '</h3></li>');
-
-                });
-                jQuery(feed.join('\n')).appendTo('#hrm0');
-                console.log(feed.join('\n'));
-			},
-			
-			complete: function(){
-
-				$('#hrm0').listview('refresh');
-			}
-
-        }); // ajax call
-
-		}); // pagecreate
-		
-
-})(jQuery);
-
-
-</script>
+<script type="text/javascript" src="usgs.js"></script>
 </body>
 </html>

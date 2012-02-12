@@ -2,7 +2,7 @@
 #
 #	Developed by: Troy Scott	
 #	Created: January 21, 2012		
-#	Modified: February  8, 2012
+#	Modified: February  11, 2012
 #	
 #	Description:
 #
@@ -45,8 +45,12 @@ def get_quake(rss):
 		
 	if rss.upper() == 'LAST_HOUR_M1':
 		url = geofeed.LAST_HOUR_M1
-	if rss.upper() == 'LAST_HOUR_M0':
-		url = geofeed.LAST_HOUR_M0
+	if rss.upper() == 'PAST_DAY_M25':
+		url = geofeed.PAST_DAY_M25
+	if rss.upper() == 'PAST_7_DAYS_M5':
+		url = geofeed.PAST_7_DAYS_M5
+	if rss.upper() == 'PAST_7_DAYS_M7':
+		url = geofeed.PAST_7_DAYS_M7
 
 	response.content_type = 'application/json'	
 

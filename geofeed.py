@@ -2,7 +2,7 @@
 #	
 #	Developed by: 	Troy Scott
 #	Created: January 21, 2012
-#	Modified: February  10, 2012
+#	Modified: February  11, 2012
 #
 #	Description:
 #
@@ -23,9 +23,12 @@ import sys
 import ast
 
 # Report Constants
+QUAKES_URL = "http://earthquake.usgs.gov/earthquakes/catalogs/"
+LAST_HOUR_M1 = QUAKES_URL + "eqs1hour-M1.xml"
+PAST_DAY_M25 = QUAKES_URL + "eqs7day-M2.5.xml"
+PAST_7_DAYS_M5 = QUAKES_URL + "eqs7day-m5.xml"
+PAST_7_DAYS_M7 = QUAKES_URL + "eqs7day-m7.xml"
 
-LAST_HOUR_M0 = "http://earthquake.usgs.gov/earthquakes/catalogs/eqs1hour-M0.xml"
-LAST_HOUR_M1 = "http://earthquake.usgs.gov/earthquakes/catalogs/eqs1hour-M1.xml"
 
 
 def get_xml(url):

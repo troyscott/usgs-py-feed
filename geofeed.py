@@ -76,11 +76,10 @@ def get_raw_feed(url=LAST_HOUR_M1):
  
 def transform(tag, value):
 
-
  	tag = remove_uri(tag)
 	items = {}
 
-	items[tag] = value
+	#items[tag] = value
 
 	# Create ISO Date (YYYY-MM-DD) and ISO Time (hh:mm:ss) from
 	# the pubDate	
@@ -102,7 +101,11 @@ def transform(tag, value):
 			items['time_iso_gmt'] = iso_time.isoformat()
 		else:
 			print 'RegExp match failed for pubDate'
-	 	
+	 
+	if tag in ('title', 'lat', 'long', 'guid'):
+		items[tag] = value
+
+			
 		
 	return items  
 

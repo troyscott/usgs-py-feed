@@ -32,13 +32,6 @@
          		
 						console.log($('li').index(listItem));
 
-
-						// light grey
-						//rowColor = '#f4f2e6';
-						
-						// light yellow
-						var rowColor = '#fbfcb8'; 
-
 						
 						// If the guid does not exist in the list
 						// then create the new list item
@@ -65,9 +58,14 @@
 							{
 
 									console.log('insert before first item in the list');
+									// set current list item to light grey	
+									$('li').first().css('color','#f4f2e6');
 									$('li').first().before(feed.join('\n'));
-									// highlight the latest records 
-									$('li').first().css('color', rowColor);
+									// set new list item to light yellow
+									$('li').first().css('color', '#fbfcb8');
+									
+									
+								
 	
 							}
 

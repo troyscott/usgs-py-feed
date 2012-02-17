@@ -1,2 +1,3 @@
 # ignore python files
 *.pyc
+scripts/

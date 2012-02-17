@@ -19,106 +19,24 @@
 <div data-role="page" id="main">
 
 	<div data-role="header">
-	<h1>USGS Report Menu </h1>
-	<a href="#options"  class="ui-btn-right" data-rel="dialog" data-transistion="pop" 
-		data-icon="gear" data-theme="b" >
-		Options
-	</a>
+		<h1>USGS Report Menu </h1>
+		<a href="#options"  class="ui-btn-right" data-rel="dialog" data-transistion="pop" 
+			data-icon="gear" data-theme="b" >
+		</a>
 	</div>
+
 	<div data-role="content">
- 	<p><a  href="#last_hour_m1-page"  data-role="button"  >Past Hour - Magnitude 1+</a></p>
-	<p><a  href="#past_day_m25-page" data-role="button"  >Past Day - Magnitude 2.5+</a></p>
-	<p><a  href="#past_7_days_m5-page" data-role="button" >Past 7 Days - Magnitude 5+</a></p>
-	<p><a  href="#past_7_days_m7-page" data-role="button"  >Past 7 Days - Magnitude 7+</a></p>
+ 		<p><a  href="#last_hour_m1-page"  data-role="button"  >Past Hour - Magnitude 1+</a></p>
+		<p><a  href="#past_day_m25-page" data-role="button"  >Past Day - Magnitude 2.5+</a></p>
+		<p><a  href="#past_7_days_m5-page" data-role="button" >Past 7 Days - Magnitude 5+</a></p>
+		<p><a  href="#past_7_days_m7-page" data-role="button"  >Past 7 Days - Magnitude 7+</a></p>
 	</div>
 
 	<div data-role="footer" data-position="fixed">
-	<a href="http://earthquake.usgs.gov/earthquakes/catalogs/">Data provided by US Geological Survey</a>
+		<a href="http://earthquake.usgs.gov/earthquakes/catalogs/">Data provided by US Geological Survey</a>
 	</div>
 
 </div>
-
-
-<!-- Hourly - M1+ -->
-
-<div data-role="page" id="last_hour_m1-page" data-theme="a">
-	<div data-role="header" data-position="inline" >
-		<h1> Past Hour - M1+</h1>
-		<a class="home" href="index.html" data-icon="home" data-theme="b" >Home</a>
-	</div>
-	<div data-role="content" data-theme="a">
-		<ul id="last_hour_m1" data-role="listview" data-inset="true" data-split-theme="b" ></ul>
-	</div>
-<div data-role="footer" data-position="fixed">
-	<a href="http://earthquake.usgs.gov/earthquakes/catalogs/">Data provided by US Geological Survey</a>
-</div>
-</div>
-
-<!-- PAST DAY - 2.5+ -->
-
-<div data-role="page" id="past_day_m25-page" data-theme="a">
-	<div data-role="header" data-position="inline" >
-		<h1> Past Day - M2.5+</h1>
-		<a href="index.html" data-icon="home" data-theme="b" >Home</a>
-	</div>
-	<div data-role="content" data-theme="a">
-		<ul id="past_day_m25" data-role="listview" data-inset="true" data-split-theme="b" ></ul>
-	</div>
-<div data-role="footer" data-position="fixed">
-	<a href="http://earthquake.usgs.gov/earthquakes/catalogs/">Data provided by US Geological Survey</a>
-</div>
-</div>
-
-
-<!-- PAST 7 DAYS - 5+ -->
-
-<div data-role="page" id="past_7_days_m5-page" data-theme="a">
-	<div data-role="header" data-position="inline" >
-		<h1>Past 7 Days - M5+</h1>
-		<a href="index.html" data-icon="home" data-theme="b" >Home</a>
-	</div>
-	<div data-role="content" data-theme="a">
-		<ul id="past_7_days_m5" data-role="listview" data-inset="true" data-split-theme="b" ></ul>
-	</div>
-<div data-role="footer" data-position="fixed">
-	<a href="http://earthquake.usgs.gov/earthquakes/catalogs/">Data provided by US Geological Survey</a>
-</div>
-</div>
-
-<!-- PAST 7 DAYS - 7+-->
-
-<div data-role="page" id="past_7_days_m7-page" data-theme="a">
-	<div data-role="header" data-position="inline" >
-		<h1>Past 7 Days - M7</h1>
-		<a href="index.html" data-icon="home" data-theme="b" >Home</a>
-	</div>
-	<div data-role="content" data-theme="a">
-		<ul id="past_7_days_m7" data-role="listview" data-inset="true" data-split-theme="b" ></ul>
-	</div>
-<div data-role="footer" data-position="fixed">
-	<a href="http://earthquake.usgs.gov/earthquakes/catalogs/">Data provided by US Geological Survey</a>
-</div>
-</div>
-
-
-<!-- Options -->
-<div data-role="page" id="options" data-theme="b">
-	<div data-role="header" data-theme="b" >
-	<h1>Options</h1>
-	</div>
-	<div data-role="content" data-theme="b">
-	<ul data-role="listview">
-	<li><a href="#">Set Location</a></li>
-	<li><a href="#">Enable Twitter</a></li>
-	<li><a href="#">Set Alerts</a></li>
-	<li><a href="#">Screen Refresh</a></li>
-	</ul>
-
-	</div>
-	<div data-role="footer">
-	</div>
-</div>
-
 
 <script type="text/javascript" src="usgs.js"></script>
 </body>

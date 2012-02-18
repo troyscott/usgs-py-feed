@@ -1,100 +1,147 @@
 
-(function($){
 
-        console.log('jQuery Works');
-		// bind the page create event to the hourly m0+ ajax request
 
-		reports = ['last_hour_m1', 'past_day_m25', 'past_7_days_m5', 'past_7_days_m7']		
-		
-		$.each(reports, function(index, report){ 
-			console.log(report);
-		
-		var isPageRefresh = false;
+(function ($) {
 
-		$('#'+ report + '-page').bind('pageinit', function() {
-		
-			console.log('pageinit....');	
-		
-			var url = 'quake/' + report;
-        	
-			console.log('pageinit: ' + url);	
-		
-			$.ajax({	
-				url: url,
-				cach: true, 
-				dataType:  'json',
-				success: function(data) {		
-							
-					$.each(data.rss, function(index, field) {
-       					
-						var feed = [];
-						var listItem = $('#' + field.guid);
-         		
-						console.log($('li').index(listItem));
+	console.log('jQuery is working...');
 
-						
-						// If the guid does not exist in the list
-						// then create the new list item
-						if ($('li').index(listItem) == -1)
-						{	
-							feed.push('<li id="' + field.guid + '" ><h3>' + field.title + '</h3>');
-							feed.push('<p>' + field.date_iso_gmt ); 
-							feed.push('&nbsp;' +  field.time_iso_gmt + ' GMT</p></li>');
-							console.log('writing new data ...');
-					
-							// If this is the initial page load then append the
-							// new list item to the unordered list	
-							if (isPageRefresh == false) {
-									console.log('append to ul');
-									$(feed.join('\n')).appendTo('#' + report);
+	var methods = {
+    	
+		initHomePage : function() {
+
+		console.log('initHomePage');
+		
+		var $page = $("#main");
+
+		// create page data that can be shared between
+		// the usgs reports	
+		$page.data("report", "");	
 	
-							}
 
-							// If this is a page refresh then you can't append the new
-							// list item to the undordered list because the sequence will 
-							// be incorrect. - Add it before the first list item
 
-							else
-							{
+    },
 
-									console.log('insert before first item in the list');
-									// set current list item to light grey	
-									$('li').first().css('color','#f4f2e6');
-									$('li').first().before(feed.join('\n'));
-									// set new list item to light yellow
-									$('li').first().css('color', '#fbfcb8');
-									
-									
-								
-	
-							}
+    	initHourlyPage : function() {
+   			
+		console.log('initHourlyPage'); 
 
-						}
+		var $page = $("#last_hour_m1-page")
+		var $config = $("#main");				
 
-							console.log('isPageRefresh: ' + isPageRefresh);	
-
-                	});
-                	//jQuery(feed.join('\n')).appendTo('#' + report);
-				},
+		$page.live("pageshow", function(event, ui){
 			
-				complete: function(){
+			$config.data("report","last_hour_m1");		
+			console.log('last_hour_m1');
+			getLastHourM1();					
+			
 
-					$('#' + report).listview('refresh');
-				}	
+			});
 
-        	}); // ajax call
 
-				// refresh the data every 15 seconds
-				setTimeout(function(){
-					$('#' + report + '-page').trigger('pageinit');
-					// This is required to load the data correctly for 
-					// the undordered list
-					isPageRefresh = true;						
-				}, 15000);
+	},
 
-			}); // pageinit
-		
-		}); // for each report
+    initOptionsPage : function() {
+    
+
+	},
+
+    initAll : function() {
+      $().initApp("initHomePage");
+      $().initApp("initHourlyPage");
+      $().initApp("initOptionsPage");
+    }
+  }
+
+  $.fn.initApp = function(method) {
+    
+	// Method calling logic
+    if ( methods[method] ) {
+      return methods[ method ].apply( this,
+      Array.prototype.slice.call( arguments, 1 ));
+    } else if ( typeof method === 'object' || ! method ) {
+      return methods.initAll.apply( this, arguments );
+    } else {
+      $.error( 'Method ' +  method + ' does not exist' );
+    }
+  }
+
+
+
 
 })(jQuery);
+
+
+$(document).ready(function(){
+	
+	$().initApp();
+
+
+
+});
+
+
+var getLastHourM1 = function() {
+	console.log("getLastHourM1");
+	
+	var $config = $("#main");
+	console.log($config.data("report")); 
+	var report = $config.data("report");
+	var url = 'quake/' + report;
+ 
+	$.ajax({
+		url: url,
+		dataType: 'json',
+		success: function(data) {
+			console.log('data - success');
+			
+			$.each(data.rss, function(index, field) {
+			
+			var feed = [];
+			var listItemID = '#' + report + "-" + field.guid;
+			var listItem = $(listItemID);
+		
+			console.log(field.guid);
+		
+			if ($('li').index(listItem) == -1)
+			{	
+				feed.push('<li id="' + listItemID + '" ><h3>' + field.title + '</h3>');
+				feed.push('<p>' + field.date_iso_gmt ); 
+				feed.push('&nbsp;' +  field.time_iso_gmt + ' GMT</p></li>');
+				console.log('writing new data ...');
+			}	
+			
+			/*		
+				// If this is the initial page load then append the
+				// new list item to the unordered list	
+				if (isPageRefresh == false) {
+			*/
+					console.log('append to ul');
+					$(feed.join('\n')).appendTo('#' + report);
+			
+			/*
+				}
+
+				// If this is a page refresh then you can't append the new
+				// list item to the undordered list because the sequence will 
+				// be incorrect. - Add it before the first list item
+
+				else
+				{
+
+					console.log('insert before first item in the list');
+					$('li').first().before(feed.join('\n'));
+									
+				}
+
+				*/
+
+			}); // each rss item	
+
+		} // success
+	
+		}); // ajax
+
+} 
+
+
 

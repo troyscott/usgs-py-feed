@@ -1,42 +1,53 @@
 
 
-
 (function ($) {
 
 	console.log('jQuery is working...');
-
 	var methods = {
     	
 		initHomePage : function() {
-
 		console.log('initHomePage');
-		
-		var $page = $("#main");
 
-		// create page data that can be shared between
-		// the usgs reports	
-		$page.data("report", "");	
+		$("#main").live("pageshow", function(event, ui) {
+			
+			console.log("page show: main");
+
+		});
+
 	
-
-
     },
 
     	initHourlyPage : function() {
    			
 		console.log('initHourlyPage'); 
+		var report = "last_hour_m1";
 
-		var $page = $("#last_hour_m1-page")
-		var $config = $("#main");				
-
-		$page.live("pageshow", function(event, ui){
-			
-			$config.data("report","last_hour_m1");		
-			console.log('last_hour_m1');
-			getLastHourM1();					
 			
 
-			});
+		$("#last_hour_m1-page").live("pageshow", function(event, ui){
+		
 
+			console.log("page show:" + report + "-page");
+			var $page = $("#" + report + "-page");
+			$page.data("isRefresh", false);
+			$page.data("report", report);
+			console.log($page.data("report"));
+			//getLastHourM1();
+			
+			getLastHourM1();	
+		
+			console.log("Refresh ..");
+			$page.data("isRefresh", true);
+				
+		});
+
+		$("#last_hour_m1-page").live("pagehide", function(event, ui) {
+		
+			console.log("page hide: " + report + "-page");
+			$("ul").children().remove();
+
+
+		});
 
 	},
 
@@ -65,9 +76,6 @@
     }
   }
 
-
-
-
 })(jQuery);
 
 
@@ -76,17 +84,19 @@ $(document).ready(function(){
 	$().initApp();
 
 
-
 });
 
 
 var getLastHourM1 = function() {
-	console.log("getLastHourM1");
 	
-	var $config = $("#main");
-	console.log($config.data("report")); 
-	var report = $config.data("report");
+	console.log("getLastHourM1");
+
+	var $page = $("#last_hour_m1-page");
+	var report = $page.data("report");
 	var url = 'quake/' + report;
+
+	console.log($page.data("isRefresh"));
+
  
 	$.ajax({
 		url: url,
@@ -100,8 +110,6 @@ var getLastHourM1 = function() {
 			var listItemID = '#' + report + "-" + field.guid;
 			var listItem = $(listItemID);
 		
-			console.log(field.guid);
-		
 			if ($('li').index(listItem) == -1)
 			{	
 				feed.push('<li id="' + listItemID + '" ><h3>' + field.title + '</h3>');
@@ -109,37 +117,29 @@ var getLastHourM1 = function() {
 				feed.push('&nbsp;' +  field.time_iso_gmt + ' GMT</p></li>');
 				console.log('writing new data ...');
 			}	
+		
+			$list = $("#" + report);
+
+			$items = $(feed.join('\n'));
+			$items.appendTo($list);	
 			
-			/*		
-				// If this is the initial page load then append the
-				// new list item to the unordered list	
-				if (isPageRefresh == false) {
-			*/
-					console.log('append to ul');
-					$(feed.join('\n')).appendTo('#' + report);
-			
-			/*
-				}
-
-				// If this is a page refresh then you can't append the new
-				// list item to the undordered list because the sequence will 
-				// be incorrect. - Add it before the first list item
-
-				else
-				{
-
-					console.log('insert before first item in the list');
-					$('li').first().before(feed.join('\n'));
-									
-				}
-
-				*/
 
 			}); // each rss item	
 
-		} // success
-	
+		}, // success
+		complete : function() {
+			$("#" + report ).listview("refresh");
+			
+		}
+			
 		}); // ajax
+
+	setTimeout(function() {
+		console.log("Set time out...");
+		$("ul").children().remove();
+		$page.trigger("pageshow");
+
+	},10000);	
 
 } 
 

@@ -27,25 +27,19 @@
 		$("#last_hour_m1-page").live("pageshow", function(event, ui){
 		
 
-			console.log("page show:" + report + "-page");
+			console.log("event: pageshow:" + report + "-page");
 			var $page = $("#" + report + "-page");
-			$page.data("isRefresh", false);
 			$page.data("report", report);
-			console.log($page.data("report"));
-			//getLastHourM1();
-			
 			getLastHourM1();	
 		
-			console.log("Refresh ..");
-			$page.data("isRefresh", true);
 				
 		});
 
 		$("#last_hour_m1-page").live("pagehide", function(event, ui) {
 		
-			console.log("page hide: " + report + "-page");
+			console.log("event: page hide: " + report + "-page");
 			$("ul").children().remove();
-
+			
 
 		});
 
@@ -89,13 +83,12 @@ $(document).ready(function(){
 
 var getLastHourM1 = function() {
 	
-	console.log("getLastHourM1");
+	console.log("function: getLastHourM1");
 
 	var $page = $("#last_hour_m1-page");
 	var report = $page.data("report");
 	var url = 'quake/' + report;
 
-	console.log($page.data("isRefresh"));
 
  
 	$.ajax({

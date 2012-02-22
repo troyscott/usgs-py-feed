@@ -1,4 +1,6 @@
 
+refresh_last_hour = true;
+
 
 (function ($) {
 
@@ -22,24 +24,35 @@
 		console.log('initHourlyPage'); 
 		var report = "last_hour_m1";
 
+		$("#last_hour_m1-page").trigger("pageshow");			
+		console.log("last hour: " + $("#last_hour_m1-page").length);	
+	
+		
+		// Check to see if the page exist
 			
-
+			
 		$("#last_hour_m1-page").live("pageshow", function(event, ui){
 		
-
+			console.log("refresh_last_hour: " + refresh_last_hour);
 			console.log("event: pageshow:" + report + "-page");
 			var $page = $("#" + report + "-page");
 			$page.data("report", report);
-			getLastHourM1();	
-		
+			
+			if ( refresh_last_hour) 
+			{
+				refresh_last_hour = false;
+				getLastHourM1();	
+
+			}
 				
 		});
+
 
 		$("#last_hour_m1-page").live("pagehide", function(event, ui) {
 		
 			console.log("event: page hide: " + report + "-page");
 			$("ul").children().remove();
-			
+
 
 		});
 
@@ -80,7 +93,7 @@ $(document).ready(function(){
 
 });
 
-
+i = 0
 var getLastHourM1 = function() {
 	
 	console.log("function: getLastHourM1");
@@ -89,7 +102,7 @@ var getLastHourM1 = function() {
 	var report = $page.data("report");
 	var url = 'quake/' + report;
 
-
+	
  
 	$.ajax({
 		url: url,
@@ -127,12 +140,15 @@ var getLastHourM1 = function() {
 			
 		}); // ajax
 
+	
+
 	setTimeout(function() {
 		console.log("Set time out...");
 		$("ul").children().remove();
-		$page.trigger("pageshow");
-
+		getLastHourM1()
+		
 	},10000);	
+	
 
 } 
 

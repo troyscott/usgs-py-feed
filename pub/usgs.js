@@ -147,7 +147,7 @@ var getLastHourM1 = function() {
 		$("ul").children().remove();
 		getLastHourM1()
 		
-	},10000);	
+	},30000);	
 	
 
 } 

@@ -1,5 +1,4 @@
 
-refresh_last_hour = true;
 
 
 (function ($) {
@@ -52,7 +51,7 @@ refresh_last_hour = true;
 		
 			console.log("event: page hide: " + report + "-page");
 			$("ul").children().remove();
-
+		
 
 		});
 
@@ -93,7 +92,12 @@ $(document).ready(function(){
 
 });
 
-i = 0
+
+
+
+refresh_last_hour = true;
+
+
 var getLastHourM1 = function() {
 	
 	console.log("function: getLastHourM1");
@@ -101,56 +105,117 @@ var getLastHourM1 = function() {
 	var $page = $("#last_hour_m1-page");
 	var report = $page.data("report");
 	var url = 'quake/' + report;
+	var refreshRate = 10000
 
+	// prevent Internal 500 Server Error
+	if (typeof report == "undefined")
+	{
+		console.log("url is not defined ...");
+		refresh_last_hour = true;
+		return;
+
+	}
+	// process ajax request
+	else
+
+	{
+
+
+	// replaced success, error and complete with
+	// done, fail and alwyas
+	// success, eror  adn complete will be deprecated
+	// in jQuery 1.8
+
+	console.log("Process ajax call ...");
+
+	var jqxhr = $.ajax({url: url, dataType: 'json'})
 	
- 
-	$.ajax({
-		url: url,
-		dataType: 'json',
-		success: function(data) {
-			console.log('data - success');
-			
+	.done(function(data) {
+		
+	
 			$.each(data.rss, function(index, field) {
 			
 			var feed = [];
-			var listItemID = '#' + report + "-" + field.guid;
-			var listItem = $(listItemID);
+			// create unique list id
+			var listItemID =  report + "-" + field.guid;
+	
+			console.log(listItemID);
+			var listItem = $("#" + listItemID);
 		
+			console.log($('li').index(listItem));	
+			
+			//check to see if the id already exists in the list
 			if ($('li').index(listItem) == -1)
 			{	
+				// if it exits add it to the array (push it)
 				feed.push('<li id="' + listItemID + '" ><h3>' + field.title + '</h3>');
 				feed.push('<p>' + field.date_iso_gmt ); 
 				feed.push('&nbsp;' +  field.time_iso_gmt + ' GMT</p></li>');
 				console.log('writing new data ...');
 			}	
-		
+
+			// prepend the data, if any, to the unordered list
 			$list = $("#" + report);
-
-			$items = $(feed.join('\n'));
-			$items.appendTo($list);	
 			
+			$items = $(feed.join('\n'));
+			console.log($items);
+			$items.prependTo($list).hide();
+			$items.fadeIn(2000);
 
+
+   
 			}); // each rss item	
 
-		}, // success
-		complete : function() {
+    		this.t = function() {	
+				window.setTimeout(function() {
+				console.log("Set time out...");
+				//$("ul").children().remove();
+				getLastHourM1();	
+			}, refreshRate);	
+	
+			}
+
+			this.t();
+
+
+	}) // done
+
+	.fail(function(jqXHR, textStatus, e) {
+
+			console.log("Text Status: " + textStatus);
+			refresh_last_hour = true
+			
+			return;
+
+	}) // fail
+
+	.always(function() {
 			$("#" + report ).listview("refresh");
 			
-		}
+	}); // always
 			
-		}); // ajax
-
 	
-
-	setTimeout(function() {
-		console.log("Set time out...");
-		$("ul").children().remove();
-		getLastHourM1()
-		
-	},30000);	
-	
+	} // end if
 
 } 
 
 
+
+var getPastSevenDaysM5 = function() {
+
+	console.log("getPastSevenDaysM5");
+
+
+
+}
+
+
+
+var getPastSevenDaysM7 = function() {
+
+	console.log("getPastSevenDaysM7");
+
+
+
+}
 

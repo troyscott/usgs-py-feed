@@ -1,14 +1,32 @@
 #!/usr/bin/env python
 #
-#	Developed by: Troy Scott	
-#	Created: January 21, 2012		
-#	Modified: February  11, 2012
+#		Developed by: Troy Scott	
+#		Created: January 21, 2012		
+#		Modified: February  11, 2012
 #	
-#	Description:
+#		Description:
 #
-#	This module is used to handle RESTful requests to the 
-#	USGS api and provide a simple web server front end for
-#	the application.
+#		This module is used to handle RESTful requests to the 
+#		USGS api and provide a simple web server front end for
+#		the application.
+#
+#       GNU General Public License, version 2 (GPL-2.0)
+#		-----------------------------------------------
+#
+#       This program is free software; you can redistribute it and/or modify it under the terms 
+#       of the GNU General Public License as published by the Free Software Foundation; either 
+#       version 2 of the License, or (at your option) any later version.
+#
+#       This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+#       without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+#       See the GNU General Public License for more details.
+#
+#       You should have received a copy of the GNU General Public License along with this program; 
+#       if not, write to the Free Software Foundation, Inc., 59 
+#       Temple Place, Suite 330, Boston, MA 02111-1307 USA
+
+
+
 
 
 import geofeed
@@ -40,7 +58,8 @@ def server_static(filename):
 @route('/quake/<rss>')
 def get_quake(rss):
 
-	print rss.upper()
+	ip = request.environ.get('REMOTE_ADDR')
+	print 'Feed: %s - %s - %s' % (rss.upper(),ip, datetime.datetime.now()) 
 
 		
 	if rss.upper() == 'LAST_HOUR_M1':
@@ -57,10 +76,27 @@ def get_quake(rss):
 	return geofeed.get_raw_feed(url) 
 
   
-def main():
+def main(server_port) :
 	debug(False)
-	run(host='0.0.0.0', port=8080, reloader=True)
+	run(server='tornado', host='0.0.0.0', port=server_port, reloader=True)
 
 # Start the server
 if __name__ == '__main__':
-	main()
+	import sys
+	
+	if len(sys.argv) == 1:
+		print 'Please enter the port for the server'
+	else:
+		#print 'Sever is running on port: %s' % sys.argv([1])
+		main(int(sys.argv[1]))
+
+
+
+
+
+
+
+
+
+
+

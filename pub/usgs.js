@@ -132,7 +132,7 @@ var getLastHourM1 = function() {
 	
 	.done(function(data) {
 		
-	
+			console.log(data);	
 			$.each(data.rss, function(index, field) {
 			
 			var feed = [];
@@ -148,9 +148,10 @@ var getLastHourM1 = function() {
 			if ($('li').index(listItem) == -1)
 			{	
 				// if it exits add it to the array (push it)
-				feed.push('<li id="' + listItemID + '" ><h3>' + field.title + '</h3>');
+				feed.push('<li id="' + listItemID + '" ><a href="map.html">');
+				feed.push('<h3>' + field.title + '</h3>');
 				feed.push('<p>' + field.date_iso_gmt ); 
-				feed.push('&nbsp;' +  field.time_iso_gmt + ' GMT</p></li>');
+				feed.push('&nbsp;' +  field.time_iso_gmt + ' GMT</p></a></li>');
 				console.log('writing new data ...');
 			}	
 

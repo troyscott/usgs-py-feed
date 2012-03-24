@@ -1,14 +1,33 @@
 #!/usr/bin/env python
 #	
-#	Developed by: 	Troy Scott
-#	Created: January 21, 2012
-#	Modified: February  11, 2012
+#		Developed by: 	Troy Scott
+#		Created: January 21, 2012
+#		Modified: February  11, 2012
 #
-#	Description:
+#		Description:
 #
-# 	This is the USGS API Module.  It makes calls to the external
-# 	USGS data feeds (usually rss feeds) and converts them to 
-# 	XML and JSON.
+# 		This is the USGS API Module.  It makes calls to the external
+# 		USGS data feeds (usually rss feeds) and converts them to 
+# 		XML and JSON.
+#
+#       GNU General Public License, version 2 (GPL-2.0)
+#		-----------------------------------------------
+#
+#       This program is free software; you can redistribute it and/or modify it under the terms 
+#       of the GNU General Public License as published by the Free Software Foundation; either 
+#       version 2 of the License, or (at your option) any later version.
+#
+#       This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+#       without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+#       See the GNU General Public License for more details.
+#
+#       You should have received a copy of the GNU General Public License along with this program; 
+#       if not, write to the Free Software Foundation, Inc., 59 
+#       Temple Place, Suite 330, Boston, MA 02111-1307 USA
+
+
+
+
 
 from datetime import date, time
 

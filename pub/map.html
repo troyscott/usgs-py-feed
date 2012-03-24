@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Home</title>
+<meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link rel="stylesheet" type="text/css" href="main.css" />
+
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBQdiFVW8-1E4h5NZoIZnusLF0zxCC9iwM&sensor=false"></script>
+
+<script src="usgs.js"></script>
+</head>
+<body>
+
+<!-- Geological Map Page -->
+
+<div data-role="page" id="mapquake">
+
+	<div data-role="header" data-position="fixed" >
+		<h1>Geological Map </h1>
+		<a href="#options"  class="ui-btn-right" data-rel="dialog" data-transistion="pop" 
+			data-icon="gear" data-theme="b" >Options
+		</a>
+	</div>
+
+	<div data-role="content" >
+	</div>
+
+	<div data-role="footer" data-position="fixed">
+		<a class="ui-btn-left" href="http://earthquake.usgs.gov/earthquakes/catalogs/">
+		Data provided by US Geological Survey</a>
+	</div>
+
+</div>
+</body>
+</html>
